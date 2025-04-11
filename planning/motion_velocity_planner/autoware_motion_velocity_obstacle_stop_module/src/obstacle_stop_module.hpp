@@ -214,6 +214,11 @@ private:
     const autoware::vehicle_info_utils::VehicleInfo & vehicle_info,
     const double ego_nearest_dist_threshold, const double ego_nearest_yaw_threshold,
     const TrajectoryPolygonCollisionCheck & trajectory_polygon_collision_check) const;
+  void searchPointcloudNearTrajectory(
+    const std::vector<TrajectoryPoint> & trajectory,
+    const pcl::PointCloud<pcl::PointXYZ>::Ptr & input_points_ptr,
+    PointCloud::Ptr output_points_pt,
+    const VehicleInfo & vehicle_info) const ;
 };
 }  // namespace autoware::motion_velocity_planner
 
