@@ -4480,7 +4480,7 @@
 </tr>
 <tr>
 <td><ul><li><code>pretty_trajectory</code></li></ul></td>
-<td>A convenient function that will <strong>almost surely succeed</strong> in constructing a Trajectory class unless the given points size is 0 or 1.<br>Input points are interpolated to 3 points using <code>Linear</code> and to 4 points using <code>Cubic</code> so that it returns<br><ul><li><code>Cubic</code> interpolated Trajectory class(by default), or</li><li><code>Akima</code> interpolated class if the parameter <code>use_akima = true</code></li></ul><br>All of the properties are interpolated by <code>default</code> interpolators setting.</td>
+<td>A convenient function that will <strong>almost surely succeed</strong> in constructing a Trajectory class unless the given points size is 0 or 1.<br>Input points are interpolated to 3 points using <code>Linear</code> and to 4 points using <code>Cubic</code> so that it returns<br><ul><li><code>Cubic</code> interpolated Trajectory class(by default), or</li><li><code>Akima</code> interpolated class if the parameter <code>use_akima = true</code></li></ul>All of the properties are interpolated by <code>default</code> interpolators setting.<br>You may need to call <code>align_orientation_with_trajectory_direction</code> if you did not give desired orientation.</td>
 <td><img alt="pretty_trajectory" src="images/utils/pretty_trajectory.drawio.svg"><a href="https://app.diagrams.net/?lightbox=1#Uhttps%3A%2F%2Fautowarefoundation.github.io%2Fautoware_core%2Fpr-332%2Fcommon%2Fautoware_trajectory%2Fimages%2Futils%2Fpretty_trajectory.drawio.svg">View in Drawio</a></td>
 </tr>
 </tbody>
