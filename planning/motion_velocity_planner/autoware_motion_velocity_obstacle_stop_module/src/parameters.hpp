@@ -71,8 +71,8 @@ struct ObstacleFilteringParam
     double pointcloud_voxel_grid_y{};
     double pointcloud_voxel_grid_z{};
     double pointcloud_cluster_tolerance{};
-    int pointcloud_min_cluster_size{};
-    int pointcloud_max_cluster_size{};
+    size_t pointcloud_min_cluster_size{};
+    size_t pointcloud_max_cluster_size{};
   };
 
   PointcloudObstacleFilteringParam pointcloud_obstacle_filtering_param;

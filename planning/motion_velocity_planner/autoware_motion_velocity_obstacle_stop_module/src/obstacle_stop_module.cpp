@@ -135,11 +135,13 @@ double calc_time_to_reach_collision_point(
 }  // namespace
 
 void ObstacleStopModule::searchPointcloudNearTrajectory(
-  const std::vector<TrajectoryPoint> & trajectory, const pcl::PointCloud<pcl::PointXYZ>::Ptr & input_points_ptr,
-  PointCloud::Ptr output_points_ptr, const VehicleInfo & vehicle_info) const 
+  const std::vector<TrajectoryPoint> & trajectory,
+  const pcl::PointCloud<pcl::PointXYZ>::Ptr & input_points_ptr,
+  PointCloud::Ptr output_points_ptr,
+  const VehicleInfo & vehicle_info) const
 {
   autoware_utils::ScopedTimeTrack st(__func__, *time_keeper_);
-  
+
   const double front_length = vehicle_info.max_longitudinal_offset_m;
   const double rear_length = vehicle_info.rear_overhang_m;
   const double vehicle_width = vehicle_info.vehicle_width_m;
@@ -148,60 +150,64 @@ void ObstacleStopModule::searchPointcloudNearTrajectory(
 
   const auto & p = obstacle_filtering_param_;
 
-  // search obstacle candidate pointcloud to reduce calculation cost
-  std::vector<Polygon2d> foot_prints;
-  foot_prints.reserve(trajectory.size());
+  // Build footprints from trajectory
+  std::vector<Polygon2d> footprints;
+  footprints.reserve(trajectory.size());
 
-  std::transform(trajectory.begin(), trajectory.end(), std::back_inserter(foot_prints),
-  [&](const TrajectoryPoint& trajectory_point) {
-    return autoware_utils::to_footprint(
+  std::transform(trajectory.begin(), trajectory.end(), std::back_inserter(footprints),
+    [&](const TrajectoryPoint & trajectory_point) {
+      return autoware_utils::to_footprint(
         trajectory_point.pose, front_length, rear_length, vehicle_width + p.max_lat_margin * 2.0);
+    });
+
+  // Define types for Boost.Geometry
+  namespace bg = boost::geometry;
+  namespace bgi = boost::geometry::index;
+  using BoostPoint2D = bg::model::point<double, 2, bg::cs::cartesian>;
+  using BoostValue = std::pair<BoostPoint2D, size_t>; // point + index
+
+  // Build R-tree from input points
+  std::vector<BoostValue> rtree_data;
+  rtree_data.reserve(input_points_ptr->points.size());
+
+  {
+    std::transform(
+      input_points_ptr->points.begin(),
+      input_points_ptr->points.end(),
+      std::back_inserter(rtree_data),
+      [i = 0](const pcl::PointXYZ & pt) mutable {
+        return std::make_pair(BoostPoint2D(pt.x, pt.y), i++);
+      });
+  }
+
+  bgi::rtree<BoostValue, bgi::quadratic<16>> rtree(rtree_data.begin(), rtree_data.end());
+
+  std::unordered_set<size_t> selected_indices;
+
+  std::for_each(footprints.begin(), footprints.end(), [&](const Polygon2d & footprint) {
+    bg::model::box<BoostPoint2D> bbox;
+    bg::envelope(footprint, bbox);
+  
+    std::vector<BoostValue> result_s;
+    rtree.query(bgi::intersects(bbox), std::back_inserter(result_s));
+  
+    for (const auto & val : result_s) {
+      const BoostPoint2D & pt = val.first;
+      if (bg::within(pt, footprint)) {
+        selected_indices.insert(val.second);
+      }
+    }
   });
 
-  const size_t num_threads = std::thread::hardware_concurrency();
-  std::vector<std::thread> threads;
-  std::mutex output_cloud_mutex;
-
-  size_t points_per_thread = input_points_ptr->points.size() / num_threads;
-  size_t remaining_points = input_points_ptr->points.size() % num_threads;
-
-  for (size_t i = 0; i < num_threads; ++i) {
-    size_t start = i * points_per_thread;
-    size_t end = start + points_per_thread;
-    if (i == num_threads - 1) {
-      end += remaining_points;
+  output_points_ptr->points.reserve(selected_indices.size());
+  std::transform(
+    selected_indices.begin(),
+    selected_indices.end(),
+    std::back_inserter(output_points_ptr->points),
+    [&] (const size_t idx) {
+      return input_points_ptr->points[idx];
     }
-
-    threads.emplace_back(
-        [&](size_t thread_start, size_t thread_end) {
-          pcl::PointCloud<pcl::PointXYZ> local_output_cloud;
-          for (size_t j = thread_start; j < thread_end; ++j) {
-            const auto& point = input_points_ptr->points[j];
-            Point2d point_2d(point.x, point.y);
-
-            const bool point_in_footprint =
-                std::any_of(foot_prints.begin(), foot_prints.end(),
-                          [&](const Polygon2d& foot_print) {
-                            return boost::geometry::within(point_2d, foot_print);
-                          });
-
-            if (point_in_footprint) {
-              local_output_cloud.push_back(point);
-            }
-          }
-          // Merge local results into the shared output cloud
-          std::unique_lock<std::mutex> lock(output_cloud_mutex);
-          output_points_ptr->points.insert(output_points_ptr->points.end(),
-                                          std::make_move_iterator(local_output_cloud.begin()),
-                                          std::make_move_iterator(local_output_cloud.end()));
-        },
-        start, end);
-  }
-
-  // Join the threads
-  for (auto& thread : threads) {
-    thread.join();
-  }
+  );
 }
 
 void ObstacleStopModule::init(rclcpp::Node & node, const std::string & module_name)
@@ -339,7 +345,6 @@ std::vector<geometry_msgs::msg::Point> ObstacleStopModule::convert_point_cloud_t
   // 1. downsample & cluster pointcloud
   PointCloud::Ptr filtered_points_ptr(new PointCloud);
   pcl::VoxelGrid<pcl::PointXYZ> filter;
-  std::cout << "pointcloud_ptr.size(): " << pointcloud_ptr->size() << "\n";
 
   searchPointcloudNearTrajectory(traj_points, pointcloud_ptr, filtered_points_ptr, vehicle_info);
   pointcloud_ptr = filtered_points_ptr;
@@ -349,8 +354,6 @@ std::vector<geometry_msgs::msg::Point> ObstacleStopModule::convert_point_cloud_t
     p.pointcloud_obstacle_filtering_param.pointcloud_voxel_grid_y,
     p.pointcloud_obstacle_filtering_param.pointcloud_voxel_grid_z);
   filter.filter(*filtered_points_ptr);
-
-  std::cout << "filtered_points_ptr.size(): " << filtered_points_ptr->size() << "\n";
 
   pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ>);
   tree->setInputCloud(filtered_points_ptr);
