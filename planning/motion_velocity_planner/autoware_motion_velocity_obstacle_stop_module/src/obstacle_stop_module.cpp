@@ -134,81 +134,6 @@ double calc_time_to_reach_collision_point(
 }
 }  // namespace
 
-void ObstacleStopModule::searchPointcloudNearTrajectory(
-  const std::vector<TrajectoryPoint> & trajectory,
-  const pcl::PointCloud<pcl::PointXYZ>::Ptr & input_points_ptr,
-  PointCloud::Ptr output_points_ptr,
-  const VehicleInfo & vehicle_info) const
-{
-  autoware_utils::ScopedTimeTrack st(__func__, *time_keeper_);
-
-  const double front_length = vehicle_info.max_longitudinal_offset_m;
-  const double rear_length = vehicle_info.rear_overhang_m;
-  const double vehicle_width = vehicle_info.vehicle_width_m;
-
-  output_points_ptr->header = input_points_ptr->header;
-
-  const auto & p = obstacle_filtering_param_;
-
-  // Build footprints from trajectory
-  std::vector<Polygon2d> footprints;
-  footprints.reserve(trajectory.size());
-
-  std::transform(trajectory.begin(), trajectory.end(), std::back_inserter(footprints),
-    [&](const TrajectoryPoint & trajectory_point) {
-      return autoware_utils::to_footprint(
-        trajectory_point.pose, front_length, rear_length, vehicle_width + p.max_lat_margin * 2.0);
-    });
-
-  // Define types for Boost.Geometry
-  namespace bg = boost::geometry;
-  namespace bgi = boost::geometry::index;
-  using BoostPoint2D = bg::model::point<double, 2, bg::cs::cartesian>;
-  using BoostValue = std::pair<BoostPoint2D, size_t>; // point + index
-
-  // Build R-tree from input points
-  std::vector<BoostValue> rtree_data;
-  rtree_data.reserve(input_points_ptr->points.size());
-
-  {
-    std::transform(
-      input_points_ptr->points.begin(),
-      input_points_ptr->points.end(),
-      std::back_inserter(rtree_data),
-      [i = 0](const pcl::PointXYZ & pt) mutable {
-        return std::make_pair(BoostPoint2D(pt.x, pt.y), i++);
-      });
-  }
-
-  bgi::rtree<BoostValue, bgi::quadratic<16>> rtree(rtree_data.begin(), rtree_data.end());
-
-  std::unordered_set<size_t> selected_indices;
-
-  std::for_each(footprints.begin(), footprints.end(), [&](const Polygon2d & footprint) {
-    bg::model::box<BoostPoint2D> bbox;
-    bg::envelope(footprint, bbox);
-  
-    std::vector<BoostValue> result_s;
-    rtree.query(bgi::intersects(bbox), std::back_inserter(result_s));
-  
-    for (const auto & val : result_s) {
-      const BoostPoint2D & pt = val.first;
-      if (bg::within(pt, footprint)) {
-        selected_indices.insert(val.second);
-      }
-    }
-  });
-
-  output_points_ptr->points.reserve(selected_indices.size());
-  std::transform(
-    selected_indices.begin(),
-    selected_indices.end(),
-    std::back_inserter(output_points_ptr->points),
-    [&] (const size_t idx) {
-      return input_points_ptr->points[idx];
-    }
-  );
-}
 
 void ObstacleStopModule::init(rclcpp::Node & node, const std::string & module_name)
 {
@@ -301,7 +226,8 @@ VelocityPlanningResult ObstacleStopModule::plan(
   // 4. filter obstacles of point cloud
   auto stop_obstacles_for_point_cloud = filter_stop_obstacle_for_point_cloud(
     planner_data->current_odometry, raw_trajectory_points, decimated_traj_points,
-    planner_data->no_ground_pointcloud, planner_data->vehicle_info_, dist_to_bumper,
+    planner_data->no_ground_pointcloud, planner_data->use_pointcloud,
+    planner_data->vehicle_info_, dist_to_bumper,
     planner_data->trajectory_polygon_collision_check,
     planner_data->find_index(raw_trajectory_points, planner_data->current_odometry.pose.pose));
 
@@ -340,31 +266,8 @@ std::vector<geometry_msgs::msg::Point> ObstacleStopModule::convert_point_cloud_t
 
   std::vector<geometry_msgs::msg::Point> stop_collision_points;
 
-  pcl::PointCloud<pcl::PointXYZ>::Ptr pointcloud_ptr =
-    std::make_shared<pcl::PointCloud<pcl::PointXYZ>>(pointcloud.pointcloud);
-  // 1. downsample & cluster pointcloud
-  PointCloud::Ptr filtered_points_ptr(new PointCloud);
-  pcl::VoxelGrid<pcl::PointXYZ> filter;
-
-  searchPointcloudNearTrajectory(traj_points, pointcloud_ptr, filtered_points_ptr, vehicle_info);
-  pointcloud_ptr = filtered_points_ptr;
-  filter.setInputCloud(pointcloud_ptr);
-  filter.setLeafSize(
-    p.pointcloud_obstacle_filtering_param.pointcloud_voxel_grid_x,
-    p.pointcloud_obstacle_filtering_param.pointcloud_voxel_grid_y,
-    p.pointcloud_obstacle_filtering_param.pointcloud_voxel_grid_z);
-  filter.filter(*filtered_points_ptr);
-
-  pcl::search::KdTree<pcl::PointXYZ>::Ptr tree(new pcl::search::KdTree<pcl::PointXYZ>);
-  tree->setInputCloud(filtered_points_ptr);
-  std::vector<pcl::PointIndices> clusters;
-  pcl::EuclideanClusterExtraction<pcl::PointXYZ> ec;
-  ec.setClusterTolerance(p.pointcloud_obstacle_filtering_param.pointcloud_cluster_tolerance);
-  ec.setMinClusterSize(p.pointcloud_obstacle_filtering_param.pointcloud_min_cluster_size);
-  ec.setMaxClusterSize(p.pointcloud_obstacle_filtering_param.pointcloud_max_cluster_size);
-  ec.setSearchMethod(tree);
-  ec.setInputCloud(filtered_points_ptr);
-  ec.extract(clusters);
+  const PointCloud::Ptr filtered_points_ptr = pointcloud.get_filtered_pointcloud_ptr();
+  std::vector<pcl::PointIndices> clusters = pointcloud.get_cluster_indices();
 
   // 2. convert clusters to obstacles
   for (const auto & cluster_indices : clusters) {
@@ -514,13 +417,14 @@ std::vector<StopObstacle> ObstacleStopModule::filter_stop_obstacle_for_predicted
 std::vector<StopObstacle> ObstacleStopModule::filter_stop_obstacle_for_point_cloud(
   const Odometry & odometry, const std::vector<TrajectoryPoint> & traj_points,
   const std::vector<TrajectoryPoint> & decimated_traj_points,
-  const PlannerData::Pointcloud & point_cloud, const VehicleInfo & vehicle_info,
+  const PlannerData::Pointcloud & point_cloud, 
+  const bool use_pointcloud, const VehicleInfo & vehicle_info,
   const double dist_to_bumper,
   const TrajectoryPolygonCollisionCheck & trajectory_polygon_collision_check, size_t ego_idx)
 {
   autoware_utils::ScopedTimeTrack st(__func__, *time_keeper_);
 
-  if (!obstacle_filtering_param_.use_pointcloud) {
+  if (!use_pointcloud) {
     return std::vector<StopObstacle>{};
   }
 
@@ -1291,7 +1195,7 @@ double ObstacleStopModule::calc_margin_from_obstacle_on_curve(
   const double dist_to_bumper, const double default_stop_margin) const
 {
   if (
-    !stop_planning_param_.enable_approaching_on_curve || obstacle_filtering_param_.use_pointcloud) {
+    !stop_planning_param_.enable_approaching_on_curve || planner_data->use_pointcloud) {
     return default_stop_margin;
   }
 

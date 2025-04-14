@@ -126,7 +126,8 @@ private:
   std::vector<StopObstacle> filter_stop_obstacle_for_point_cloud(
     const Odometry & odometry, const std::vector<TrajectoryPoint> & traj_points,
     const std::vector<TrajectoryPoint> & decimated_traj_points,
-    const PlannerData::Pointcloud & point_cloud, const VehicleInfo & vehicle_info,
+    const PlannerData::Pointcloud & point_cloud, 
+    const bool use_pointcloud, const VehicleInfo & vehicle_info,
     const double dist_to_bumper,
     const TrajectoryPolygonCollisionCheck & trajectory_polygon_collision_check, size_t ego_idx);
 
@@ -214,11 +215,6 @@ private:
     const autoware::vehicle_info_utils::VehicleInfo & vehicle_info,
     const double ego_nearest_dist_threshold, const double ego_nearest_yaw_threshold,
     const TrajectoryPolygonCollisionCheck & trajectory_polygon_collision_check) const;
-  void searchPointcloudNearTrajectory(
-    const std::vector<TrajectoryPoint> & trajectory,
-    const pcl::PointCloud<pcl::PointXYZ>::Ptr & input_points_ptr,
-    PointCloud::Ptr output_points_pt,
-    const VehicleInfo & vehicle_info) const ;
 };
 }  // namespace autoware::motion_velocity_planner
 
