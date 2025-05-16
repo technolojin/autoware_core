@@ -33,6 +33,7 @@ autoware_internal_planning_msgs::msg::PathPointWithLaneId path_point(double x, d
   autoware_internal_planning_msgs::msg::PathPointWithLaneId p;
   p.point.pose.position.x = x;
   p.point.pose.position.y = y;
+  p.lane_ids = {0};
   return p;
 }
 
@@ -74,7 +75,7 @@ protected:
     clock_ = std::make_shared<rclcpp::Clock>();
 
     module_ = std::make_shared<StopLineModule>(
-      1, stop_line_, planner_param_, rclcpp::get_logger("test_logger"), clock_,
+      1, stop_line_, 0, planner_param_, rclcpp::get_logger("test_logger"), clock_,
       std::make_shared<autoware_utils::TimeKeeper>(),
       std::make_shared<autoware::planning_factor_interface::PlanningFactorInterface>(
         node_.get(), "test_stopline"));
