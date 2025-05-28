@@ -4246,9 +4246,17 @@ Note that if a new stop obstacle appears and the previous closest obstacle remov
 In order to avoid the ego to restart, we keep the previous stop point if the ego's velocity is less than <code>stop_planning.hold_stop_velocity_threshold</code> and the distance between the current and previous stop points is less than <code>stop_planning.hold_stop_distance_threshold</code>.</p>
 <p>In order to keep the closest stop point</p>
 <h4 id="stop-point-adjustment-on-the-curve">Stop point adjustment on the curve<a class="headerlink" href="#stop-point-adjustment-on-the-curve" title="Permanent link">#</a></h4>
-<p>Enabling <code>stop_planning.stop_on_curve.enable_approaching</code> will make the stop margin shorter than usual on a curve.
-<code>stop_planning.stop_on_curve.additional_stop_margin</code> will be applied instead of <code>stop_planning.stop_margin</code>.
-<code>stop_planning.stop_on_curve.min_stop_margin</code> will be kept at minimum.</p>
+<p>When the ego stops on the curve road, since the stop margin is a bit long by default, in the following figure, the object B will come between the ego and object A.
+To avoid this cut-in, the feature of using the stop margin shorter than usual on a curve can be used by enabling <code>stop_planning.stop_on_curve.enable_approaching</code>.</p>
+<p>The following figure shows the logic.</p>
+<ul>
+<li>First, calculate the blue point where the straight driving footprint of the each future ego's pose collides with the front object.</li>
+<li>Then, calculate the stop point <code>stop_planning.stop_on_curve.additional_stop_margin</code> behind the above ego's pose.<ul>
+<li><code>stop_planning.stop_on_curve.min_stop_margin</code> will be kept at minimum between the ego and object.</li>
+</ul>
+</li>
+</ul>
+<p><img alt="stop_on_curve" src="docs/stop_on_curve.drawio.svg"></p>
 <h4 id="ignoring-crossing-obstacles">Ignoring crossing obstacles<a class="headerlink" href="#ignoring-crossing-obstacles" title="Permanent link">#</a></h4>
 <p>Enabling <code>obstacle_filtering.ignore_crossing_obstacle</code> will ignore the obstacles which perpendicularly crosses the ego's path.
 The target obstacle meets the following conditions</p>
