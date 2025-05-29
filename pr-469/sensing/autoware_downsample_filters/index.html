@@ -8,20 +8,20 @@
       
       
       
-        <link rel="canonical" href="https://autowarefoundation.github.io/autoware_core/pr-469/common/autoware_point_types/">
+        <link rel="canonical" href="https://autowarefoundation.github.io/autoware_core/pr-469/sensing/autoware_downsample_filters/">
       
       
-        <link rel="prev" href="../autoware_osqp_interface/design/osqp_interface-design/">
+        <link rel="prev" href="../autoware_crop_box_filter/">
       
       
-        <link rel="next" href="../autoware_qp_interface/design/qp_interface-design/">
+        <link rel="next" href="../autoware_gnss_poser/">
       
       <link rel="icon" href="../../docs/assets/images/autoware-foundation.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.20">
     
     
       
-        <title>Autoware Point Types - Autoware Core Documentation</title>
+        <title>autoware_downsample_filters - Autoware Core Documentation</title>
       
     
     
@@ -77,7 +77,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#autoware-point-types" class="md-skip">
+        <a href="#autoware_downsample_filters" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Autoware Point Types
+              autoware_downsample_filters
             
           </span>
         </div>
@@ -224,8 +224,6 @@
         
   
   
-    
-  
 
 
   
@@ -237,7 +235,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../autoware_component_interface_specs/" class="md-tabs__link md-tabs__link--active">
+      <a href="../../common/autoware_component_interface_specs/" class="md-tabs__link">
         Common
       </a>
     </li>
@@ -364,6 +362,8 @@
         
   
   
+    
+  
 
 
   
@@ -375,7 +375,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../sensing/autoware_core_sensing/" class="md-tabs__link">
+      <a href="../autoware_core_sensing/" class="md-tabs__link md-tabs__link--active">
         Sensing
       </a>
     </li>
@@ -533,16 +533,16 @@
 
   
   
-    
-  
   
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
       
       
         
@@ -583,7 +583,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_2">
           <span class="md-nav__icon md-icon"></span>
           Common
@@ -618,7 +618,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../autoware_component_interface_specs/">Autoware component interface specs</a>
+          <a href="../../common/autoware_component_interface_specs/">Autoware component interface specs</a>
           
         </div>
       
@@ -666,7 +666,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../autoware_geography_utils/">Autoware geography utils</a>
+          <a href="../../common/autoware_geography_utils/">Autoware geography utils</a>
           
         </div>
       
@@ -727,7 +727,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../autoware_global_parameter_loader/Readme/" class="md-nav__link">
+      <a href="../../common/autoware_global_parameter_loader/Readme/" class="md-nav__link">
         Autoware Global Parameter Loader
       </a>
     </li>
@@ -770,7 +770,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../autoware_interpolation/">Autoware interpolation</a>
+          <a href="../../common/autoware_interpolation/">Autoware interpolation</a>
           
         </div>
       
@@ -818,7 +818,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../autoware_kalman_filter/">Autoware kalman filter</a>
+          <a href="../../common/autoware_kalman_filter/">Autoware kalman filter</a>
           
         </div>
       
@@ -866,7 +866,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../autoware_lanelet2_utils/">Autoware lanelet2 utils</a>
+          <a href="../../common/autoware_lanelet2_utils/">Autoware lanelet2 utils</a>
           
         </div>
       
@@ -916,7 +916,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../autoware_motion_utils/">Autoware motion utils</a>
+          <a href="../../common/autoware_motion_utils/">Autoware motion utils</a>
           
             <label for="__nav_2_7">
               <span class="md-nav__icon md-icon"></span>
@@ -1005,7 +1005,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../autoware_motion_utils/docs/vehicle/vehicle/" class="md-nav__link">
+      <a href="../../common/autoware_motion_utils/docs/vehicle/vehicle/" class="md-nav__link">
         vehicle utils
       </a>
     </li>
@@ -1062,7 +1062,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../autoware_node/">Autoware node</a>
+          <a href="../../common/autoware_node/">Autoware node</a>
           
         </div>
       
@@ -1110,7 +1110,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../autoware_object_recognition_utils/">Autoware object recognition utils</a>
+          <a href="../../common/autoware_object_recognition_utils/">Autoware object recognition utils</a>
           
         </div>
       
@@ -1204,7 +1204,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../autoware_osqp_interface/design/osqp_interface-design/" class="md-nav__link">
+      <a href="../../common/autoware_osqp_interface/design/osqp_interface-design/" class="md-nav__link">
         Interface for the OSQP library
       </a>
     </li>
@@ -1230,18 +1230,18 @@
               
   
   
-    
-  
   
     
       
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_11" checked>
+        
+      
+      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2_11" >
       
       
         
@@ -1253,12 +1253,12 @@
       
         
         
-        <div class="md-nav__link md-nav__link--index md-nav__link--active">
-          <a href="./">Autoware point types</a>
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../common/autoware_point_types/">Autoware point types</a>
           
         </div>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_11_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_11_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_2_11">
           <span class="md-nav__icon md-icon"></span>
           Autoware point types
@@ -1348,7 +1348,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../autoware_qp_interface/design/qp_interface-design/" class="md-nav__link">
+      <a href="../../common/autoware_qp_interface/design/qp_interface-design/" class="md-nav__link">
         Interface for QP solvers
       </a>
     </li>
@@ -1400,7 +1400,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../autoware_signal_processing/">Autoware signal processing</a>
+          <a href="../../common/autoware_signal_processing/">Autoware signal processing</a>
           
             <label for="__nav_2_13">
               <span class="md-nav__icon md-icon"></span>
@@ -1456,7 +1456,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../autoware_signal_processing/documentation/ButterworthFilter/" class="md-nav__link">
+      <a href="../../common/autoware_signal_processing/documentation/ButterworthFilter/" class="md-nav__link">
         ButterworthFilter
       </a>
     </li>
@@ -1506,7 +1506,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../autoware_trajectory/">Autoware trajectory</a>
+          <a href="../../common/autoware_trajectory/">Autoware trajectory</a>
           
         </div>
       
@@ -1554,7 +1554,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../autoware_vehicle_info_utils/">Autoware vehicle info utils</a>
+          <a href="../../common/autoware_vehicle_info_utils/">Autoware vehicle info utils</a>
           
         </div>
       
@@ -3413,16 +3413,16 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
       
       
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
       
       
         
@@ -3443,7 +3443,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_8">
           <span class="md-nav__icon md-icon"></span>
           Sensing
@@ -3478,7 +3478,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../sensing/autoware_core_sensing/">Autoware core sensing</a>
+          <a href="../autoware_core_sensing/">Autoware core sensing</a>
           
         </div>
       
@@ -3526,7 +3526,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../sensing/autoware_crop_box_filter/">Autoware crop box filter</a>
+          <a href="../autoware_crop_box_filter/">Autoware crop box filter</a>
           
         </div>
       
@@ -3550,18 +3550,18 @@
               
   
   
+    
+  
   
     
       
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
       
       
       
-        
-      
-      <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8_3" >
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_3" checked>
       
       
         
@@ -3573,12 +3573,12 @@
       
         
         
-        <div class="md-nav__link md-nav__link--index ">
-          <a href="../../sensing/autoware_downsample_filters/">Autoware downsample filters</a>
+        <div class="md-nav__link md-nav__link--index md-nav__link--active">
+          <a href="./">Autoware downsample filters</a>
           
         </div>
       
-      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_3_label" aria-expanded="false">
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_3_label" aria-expanded="true">
         <label class="md-nav__title" for="__nav_8_3">
           <span class="md-nav__icon md-icon"></span>
           Autoware downsample filters
@@ -3622,7 +3622,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../sensing/autoware_gnss_poser/">Autoware gnss poser</a>
+          <a href="../autoware_gnss_poser/">Autoware gnss poser</a>
           
         </div>
       
@@ -3670,7 +3670,7 @@
         
         
         <div class="md-nav__link md-nav__link--index ">
-          <a href="../../sensing/autoware_vehicle_velocity_converter/">Autoware vehicle velocity converter</a>
+          <a href="../autoware_vehicle_velocity_converter/">Autoware vehicle velocity converter</a>
           
         </div>
       
@@ -4160,33 +4160,87 @@
     Design
   </a>
   
-    <nav class="md-nav" aria-label="Design">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inner-workings-algorithms" class="md-nav__link">
+    Inner-workings / Algorithms
+  </a>
+  
+    <nav class="md-nav" aria-label="Inner-workings / Algorithms">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#point-cloud-data-type-definition" class="md-nav__link">
-    Point cloud data type definition
+  <a href="#random-downsample-filter" class="md-nav__link">
+    Random Downsample Filter
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#operator-overload" class="md-nav__link">
-    Operator overload
+  <a href="#voxel-grid-downsample-filter" class="md-nav__link">
+    Voxel Grid Downsample Filter
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#field-generators" class="md-nav__link">
-    Field generators
+  <a href="#pickup-based-voxel-grid-downsample-filter" class="md-nav__link">
+    Pickup Based Voxel Grid Downsample Filter
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inputs-outputs" class="md-nav__link">
+    Inputs / Outputs
+  </a>
+  
+    <nav class="md-nav" aria-label="Inputs / Outputs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input" class="md-nav__link">
+    Input
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#registration-mechanism" class="md-nav__link">
-    Registration mechanism
+  <a href="#output" class="md-nav__link">
+    Output
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    Parameters
+  </a>
+  
+    <nav class="md-nav" aria-label="Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#launch-file-parameters" class="md-nav__link">
+    Launch file Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#node-parameters" class="md-nav__link">
+    Node Parameters
   </a>
   
 </li>
@@ -4199,6 +4253,68 @@
         <li class="md-nav__item">
   <a href="#usage" class="md-nav__link">
     Usage
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1publish-static-tf-from-input-pointcloud-to-target-frame-that-is-used-for-filtering-eg" class="md-nav__link">
+    1.publish static tf from input pointcloud to target frame that is used for filtering, e.g
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2launch-one-of-the-downsample-node" class="md-nav__link">
+    2.launch one of the downsample node
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-launch-rviz2-and-awsim-to-check-the-downsample-result" class="md-nav__link">
+    3. launch rviz2 and AWSIM to check the downsample result
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#assumptions-known-limits" class="md-nav__link">
+    Assumptions / Known limits
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-error-detection-and-handling" class="md-nav__link">
+    (Optional) Error detection and handling
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-performance-characterization" class="md-nav__link">
+    (Optional) Performance characterization
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-referencesexternal-links" class="md-nav__link">
+    (Optional) References/External links
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optional-future-extensions-unimplemented-parts" class="md-nav__link">
+    (Optional) Future extensions / Unimplemented parts
   </a>
   
 </li>
@@ -4221,61 +4337,149 @@
   
 
 
-<div><h1 id="autoware-point-types">Autoware Point Types<a class="headerlink" href="#autoware-point-types" title="Permanent link">#</a></h1>
+<div><h1 id="autoware_downsample_filters">autoware_downsample_filters<a class="headerlink" href="#autoware_downsample_filters" title="Permanent link">#</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">#</a></h2>
-<p>This package provides a variety of structures to represent different types of point cloud data, mainly used for point cloud processing and analysis.</p>
+<p>The <code>autoware_downsample_filters</code> is a package that that reduces the number of points of the pointcloud.</p>
 <h2 id="design">Design<a class="headerlink" href="#design" title="Permanent link">#</a></h2>
-<h3 id="point-cloud-data-type-definition">Point cloud data type definition<a class="headerlink" href="#point-cloud-data-type-definition" title="Permanent link">#</a></h3>
-<p><code>autoware_point_types</code> defines multiple structures (such as PointXYZI, PointXYZIRC, PointXYZIRADRT, PointXYZIRCAEDT), each structure contains different attributes to adapt to different application scenarios.</p>
-<ul>
-<li><code>autoware::point_types::PointXYZI</code>: Point type with intensity information.</li>
-<li><code>autoware::point_types::PointXYZIRC</code>: Extended PointXYZI, adds return_type and channel information.</li>
-<li><code>autoware::point_types::PointXYZIRADRT</code>: Extended PointXYZI, adds ring, azimuth, distance, return_type and time_stamp information.</li>
-<li><code>autoware::point_types::PointXYZIRCAEDT</code>: Similar to PointXYZIRADRT, but adds elevation information and uses <code>std::uint32_t</code> as the data type for time_stamp.</li>
-</ul>
-<h3 id="operator-overload">Operator overload<a class="headerlink" href="#operator-overload" title="Permanent link">#</a></h3>
-<p>Each structure overloads the <code>==</code> operator, allowing users to easily compare whether two points are equal, which is very useful for deduplication and matching of point cloud data.</p>
-<h3 id="field-generators">Field generators<a class="headerlink" href="#field-generators" title="Permanent link">#</a></h3>
-<p>The field generator is implemented using macro definitions and std::tuple, which simplifies the serialization and deserialization process of point cloud messages and improves the reusability and readability of the code.</p>
-<h3 id="registration-mechanism">Registration mechanism<a class="headerlink" href="#registration-mechanism" title="Permanent link">#</a></h3>
-<p>Register custom point cloud structures into the PCL library through the macro <code>POINT_CLOUD_REGISTER_POINT_STRUCT</code>, so that these structures can be directly integrated with other functions of the PCL library.</p>
+<p>The <code>autoware_downsample_filters</code> is implemented for reducing the computational load and improving the performance of the system.</p>
+<h2 id="inner-workings-algorithms">Inner-workings / Algorithms<a class="headerlink" href="#inner-workings-algorithms" title="Permanent link">#</a></h2>
+<h3 id="random-downsample-filter">Random Downsample Filter<a class="headerlink" href="#random-downsample-filter" title="Permanent link">#</a></h3>
+<p><code>pcl::RandomSample</code> is used, which points are sampled with uniform probability.</p>
+<h3 id="voxel-grid-downsample-filter">Voxel Grid Downsample Filter<a class="headerlink" href="#voxel-grid-downsample-filter" title="Permanent link">#</a></h3>
+<p><code>pcl::VoxelGrid</code> is used, which points in each voxel are approximated with their centroid.</p>
+<h3 id="pickup-based-voxel-grid-downsample-filter">Pickup Based Voxel Grid Downsample Filter<a class="headerlink" href="#pickup-based-voxel-grid-downsample-filter" title="Permanent link">#</a></h3>
+<p>This algorithm samples a single actual point existing within the voxel, not the centroid. The computation cost is low compared to Centroid Based Voxel Grid Filter.</p>
+<h2 id="inputs-outputs">Inputs / Outputs<a class="headerlink" href="#inputs-outputs" title="Permanent link">#</a></h2>
+<h3 id="input">Input<a class="headerlink" href="#input" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input</code></td>
+<td><code>sensor_msgs::msg::PointCloud2</code></td>
+<td>reference points</td>
+</tr>
+</tbody>
+</table>
+<h3 id="output">Output<a class="headerlink" href="#output" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>output</code></td>
+<td><code>sensor_msgs::msg::PointCloud2</code></td>
+<td>downsampled points</td>
+</tr>
+</tbody>
+</table>
+<h2 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">#</a></h2>
+<h3 id="launch-file-parameters">Launch file Parameters<a class="headerlink" href="#launch-file-parameters" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>input_frame</code></td>
+<td>string</td>
+<td>" "</td>
+<td>the frame id in which filtering is performed</td>
+</tr>
+<tr>
+<td><code>output_frame</code></td>
+<td>string</td>
+<td>" "</td>
+<td>output frame id of the filtered points</td>
+</tr>
+<tr>
+<td><code>max_queue_size</code></td>
+<td>size_t</td>
+<td>5</td>
+<td>max buffer size of input/output topics</td>
+</tr>
+</tbody>
+</table>
+<h3 id="node-parameters">Node Parameters<a class="headerlink" href="#node-parameters" title="Permanent link">#</a></h3>
+<h4 id="random_downsample_filter_node">random_downsample_filter_node<a class="headerlink" href="#random_downsample_filter_node" title="Permanent link">#</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sample_num</code></td>
+<td>size_t</td>
+<td>1500</td>
+<td>random sample number</td>
+</tr>
+</tbody>
+</table>
+<h4 id="voxel_grid_downsample_filter_node">voxel_grid_downsample_filter_node<a class="headerlink" href="#voxel_grid_downsample_filter_node" title="Permanent link">#</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>voxel_size_x</code></td>
+<td>double</td>
+<td>0.3</td>
+<td>x value of the voxel</td>
+</tr>
+<tr>
+<td><code>voxel_size_y</code></td>
+<td>double</td>
+<td>0.3</td>
+<td>y value of the voxel</td>
+</tr>
+<tr>
+<td><code>voxel_size_z</code></td>
+<td>double</td>
+<td>0.1</td>
+<td>z value of the voxel</td>
+</tr>
+</tbody>
+</table>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">#</a></h2>
-<ul>
-<li>Create a point cloud object of PointXYZIRC type</li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">"autoware/point_types/types.hpp"</span>
-
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span>
-<span class="w">    </span><span class="n">pcl</span><span class="o">::</span><span class="n">PointCloud</span><span class="o">&lt;</span><span class="n">autoware</span><span class="o">::</span><span class="n">point_types</span><span class="o">::</span><span class="n">PointXYZIRC</span><span class="o">&gt;::</span><span class="n">Ptr</span><span class="w"> </span><span class="n">cloud</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">pcl</span><span class="o">::</span><span class="n">PointCloud</span><span class="o">&lt;</span><span class="n">autoware</span><span class="o">::</span><span class="n">point_types</span><span class="o">::</span><span class="n">PointXYZIRC</span><span class="o">&gt;</span><span class="p">());</span>
-
-<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w"> </span><span class="o">++</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">autoware</span><span class="o">::</span><span class="n">point_types</span><span class="o">::</span><span class="n">PointXYZIRC</span><span class="w"> </span><span class="n">point</span><span class="p">;</span>
-<span class="w">        </span><span class="n">point</span><span class="p">.</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.1</span><span class="p">);</span>
-<span class="w">        </span><span class="n">point</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.2</span><span class="p">);</span>
-<span class="w">        </span><span class="n">point</span><span class="p">.</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.3</span><span class="p">);</span>
-<span class="w">        </span><span class="n">point</span><span class="p">.</span><span class="n">intensity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">10</span><span class="p">);</span>
-<span class="w">        </span><span class="n">point</span><span class="p">.</span><span class="n">return_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">autoware</span><span class="o">::</span><span class="n">point_types</span><span class="o">::</span><span class="n">ReturnType</span><span class="o">::</span><span class="n">SINGLE_STRONGEST</span><span class="p">;</span>
-<span class="w">        </span><span class="n">point</span><span class="p">.</span><span class="n">channel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">static_cast</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">uint16_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-
-<span class="w">        </span><span class="n">cloud</span><span class="o">-&gt;</span><span class="n">points</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">point</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">    </span><span class="n">cloud</span><span class="o">-&gt;</span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">cloud</span><span class="o">-&gt;</span><span class="n">points</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-<span class="w">    </span><span class="n">cloud</span><span class="o">-&gt;</span><span class="n">height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
+<h3 id="1publish-static-tf-from-input-pointcloud-to-target-frame-that-is-used-for-filtering-eg">1.publish static tf from input pointcloud to target frame that is used for filtering, e.g<a class="headerlink" href="#1publish-static-tf-from-input-pointcloud-to-target-frame-that-is-used-for-filtering-eg" title="Permanent link">#</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">ros2</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">tf2_ros</span><span class="w"> </span><span class="n">static_transform_publisher</span><span class="w"> </span><span class="mf">2.0</span><span class="w"> </span><span class="mf">3.2</span><span class="w"> </span><span class="mf">1.3</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w">  </span><span class="n">velodyne_top_base_link</span><span class="w">  </span><span class="n">base_link</span>
 </code></pre></div>
-<ul>
-<li>Convert ROS message to point cloud of PointXYZIRC type</li>
-</ul>
-<div class="highlight"><pre><span></span><code><span class="n">ExampleNode</span><span class="o">::</span><span class="n">points_callback</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">PointCloud2</span><span class="o">::</span><span class="n">ConstSharedPtr</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">points_msg_ptr</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">pcl</span><span class="o">::</span><span class="n">PointCloud</span><span class="o">&lt;</span><span class="n">autoware</span><span class="o">::</span><span class="n">point_types</span><span class="o">::</span><span class="n">PointXYZIRC</span><span class="o">&gt;::</span><span class="n">Ptr</span><span class="w"> </span><span class="n">points_ptr</span><span class="p">(</span>
-<span class="w">    </span><span class="k">new</span><span class="w"> </span><span class="n">pcl</span><span class="o">::</span><span class="n">PointCloud</span><span class="o">&lt;</span><span class="n">autoware</span><span class="o">::</span><span class="n">point_types</span><span class="o">::</span><span class="n">PointXYZIRC</span><span class="o">&gt;</span><span class="p">);</span>
-
-<span class="w">    </span><span class="n">pcl</span><span class="o">::</span><span class="n">fromROSMsg</span><span class="p">(</span><span class="o">*</span><span class="n">points_msg_ptr</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">points_ptr</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<h3 id="2launch-one-of-the-downsample-node">2.launch one of the downsample node<a class="headerlink" href="#2launch-one-of-the-downsample-node" title="Permanent link">#</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">ros2</span><span class="w"> </span><span class="n">launch</span><span class="w"> </span><span class="n">autoware_downsample_filters</span><span class="w"> </span><span class="n">random_downsample_filter_node</span><span class="p">.</span><span class="n">launch</span><span class="p">.</span><span class="n">xml</span>
+</code></pre></div>
+<h3 id="3-launch-rviz2-and-awsim-to-check-the-downsample-result">3. launch rviz2 and AWSIM to check the downsample result<a class="headerlink" href="#3-launch-rviz2-and-awsim-to-check-the-downsample-result" title="Permanent link">#</a></h3>
+<h2 id="assumptions-known-limits">Assumptions / Known limits<a class="headerlink" href="#assumptions-known-limits" title="Permanent link">#</a></h2>
+<h2 id="optional-error-detection-and-handling">(Optional) Error detection and handling<a class="headerlink" href="#optional-error-detection-and-handling" title="Permanent link">#</a></h2>
+<h2 id="optional-performance-characterization">(Optional) Performance characterization<a class="headerlink" href="#optional-performance-characterization" title="Permanent link">#</a></h2>
+<h2 id="optional-referencesexternal-links">(Optional) References/External links<a class="headerlink" href="#optional-referencesexternal-links" title="Permanent link">#</a></h2>
+<h2 id="optional-future-extensions-unimplemented-parts">(Optional) Future extensions / Unimplemented parts<a class="headerlink" href="#optional-future-extensions-unimplemented-parts" title="Permanent link">#</a></h2></div>
 
 
 
@@ -4302,7 +4506,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../autoware_osqp_interface/design/osqp_interface-design/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Interface for the OSQP library" rel="prev">
+          <a href="../autoware_crop_box_filter/" class="md-footer__link md-footer__link--prev" aria-label="Previous: autoware_crop_box_filter" rel="prev">
             <div class="md-footer__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
             </div>
@@ -4311,20 +4515,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Interface for the OSQP library
+                autoware_crop_box_filter
               </div>
             </div>
           </a>
         
         
           
-          <a href="../autoware_qp_interface/design/qp_interface-design/" class="md-footer__link md-footer__link--next" aria-label="Next: Interface for QP solvers" rel="next">
+          <a href="../autoware_gnss_poser/" class="md-footer__link md-footer__link--next" aria-label="Next: gnss_poser" rel="next">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Interface for QP solvers
+                gnss_poser
               </div>
             </div>
             <div class="md-footer__button md-icon">
