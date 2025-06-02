@@ -141,6 +141,16 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://autowarefoundation.github.io/autoware_core/latest/localization/autoware_ndt_scan_matcher/</loc>
+         <lastmod>2025-06-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://autowarefoundation.github.io/autoware_core/latest/localization/autoware_ndt_scan_matcher/include/autoware/ndt_scan_matcher/ndt_omp/</loc>
+         <lastmod>2025-06-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://autowarefoundation.github.io/autoware_core/latest/localization/autoware_stop_filter/</loc>
          <lastmod>2025-06-02</lastmod>
          <changefreq>daily</changefreq>
