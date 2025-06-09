@@ -4570,6 +4570,12 @@
 <span class="w">      </span><span class="n">autoware</span><span class="o">::</span><span class="n">planning_factor_interface</span><span class="o">::</span><span class="n">PlanningFactorInterface</span><span class="o">&gt;</span><span class="p">(</span>
 <span class="w">      </span><span class="o">&amp;</span><span class="n">node</span><span class="p">,</span><span class="w"> </span><span class="s">"avoidance_planner"</span><span class="p">)}</span>
 </code></pre></div>
+<p>You can also enable console output for debugging by setting the appropriate parameters:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Enable console output with a 1000ms throttle duration</span>
+<span class="n">planning_factor_interface_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span>
+<span class="w">  </span><span class="n">autoware</span><span class="o">::</span><span class="n">planning_factor_interface</span><span class="o">::</span><span class="n">PlanningFactorInterface</span><span class="o">&gt;</span><span class="p">(</span>
+<span class="w">  </span><span class="o">&amp;</span><span class="n">node</span><span class="p">,</span><span class="w"> </span><span class="s">"avoidance_planner"</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="p">);</span>
+</code></pre></div>
 <h3 id="adding-planning-factors">Adding Planning Factors<a class="headerlink" href="#adding-planning-factors" title="Permanent link">#</a></h3>
 <div class="highlight"><pre><span></span><code><span class="n">planning_factor_interface_</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span>
 <span class="w">        </span><span class="n">traj_points</span><span class="p">,</span><span class="w"> </span><span class="n">ego_pose</span><span class="p">,</span><span class="w"> </span><span class="n">stop_pose</span><span class="p">,</span>
