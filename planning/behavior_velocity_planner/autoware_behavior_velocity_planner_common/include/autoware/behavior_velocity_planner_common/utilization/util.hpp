@@ -15,7 +15,8 @@
 #ifndef AUTOWARE__BEHAVIOR_VELOCITY_PLANNER_COMMON__UTILIZATION__UTIL_HPP_
 #define AUTOWARE__BEHAVIOR_VELOCITY_PLANNER_COMMON__UTILIZATION__UTIL_HPP_
 
-#include <autoware_utils/geometry/boost_geometry.hpp>
+#include <autoware/route_handler/route_handler.hpp>
+#include <autoware_utils_geometry/boost_geometry.hpp>
 
 #include <autoware_internal_planning_msgs/msg/path_with_lane_id.hpp>
 #include <autoware_perception_msgs/msg/predicted_objects.hpp>
@@ -62,9 +63,9 @@ struct TrafficSignalStamped
 };
 
 using Pose = geometry_msgs::msg::Pose;
-using Point2d = autoware_utils::Point2d;
-using LineString2d = autoware_utils::LineString2d;
-using Polygon2d = autoware_utils::Polygon2d;
+using Point2d = autoware_utils_geometry::Point2d;
+using LineString2d = autoware_utils_geometry::LineString2d;
+using Polygon2d = autoware_utils_geometry::Polygon2d;
 using BasicPolygons2d = std::vector<lanelet::BasicPolygon2d>;
 using Polygons2d = std::vector<Polygon2d>;
 using autoware_internal_planning_msgs::msg::PathPointWithLaneId;
@@ -126,9 +127,16 @@ double findReachTime(
 
 std::vector<geometry_msgs::msg::Point> toRosPoints(const PredictedObjects & object);
 
-LineString2d extendLine(
-  const lanelet::ConstPoint3d & lanelet_point1, const lanelet::ConstPoint3d & lanelet_point2,
-  const double & length);
+/**
+ * @brief Extend segment until it intersects with two bounds
+ * @param segment Segment to extend
+ * @param bound1 First bound
+ * @param bound2 Second bound
+ * @return Extended segment (direction is the same as original)
+ */
+LineString2d extendSegmentToBounds(
+  const lanelet::BasicLineString2d & segment, const std::vector<geometry_msgs::msg::Point> & bound1,
+  const std::vector<geometry_msgs::msg::Point> & bound2);
 
 template <class T>
 std::vector<T> concatVector(const std::vector<T> & vec1, const std::vector<T> & vec2)
@@ -238,6 +246,16 @@ std::set<lanelet::Id> getAssociativeIntersectionLanelets(
 
 lanelet::ConstLanelets getConstLaneletsFromIds(
   const lanelet::LaneletMapConstPtr & map, const std::set<lanelet::Id> & ids);
+
+/**
+ * @brief Collect lane IDs including the target lane and its adjacent (next and previous) lanes
+ * @param lane_id Target lane ID to collect adjacent lanes from
+ * @param route_handler Route handler containing the lanelet map information
+ * @return Vector of lane IDs including the target lane ID and IDs of adjacent (next and previous)
+ * lanes
+ */
+lanelet::Ids collectConnectedLaneIds(
+  const int64_t lane_id, const std::shared_ptr<route_handler::RouteHandler> & route_handler);
 
 }  // namespace planning_utils
 }  // namespace autoware::behavior_velocity_planner
