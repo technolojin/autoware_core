@@ -43,13 +43,9 @@ publishers:
   - name: trajectory
     message_type: autoware_planning_msgs/msg/Trajectory
   - name: velocity_limit
-    message_type: tier4_planning_msgs/msg/VelocityLimit
+    message_type: autoware_internal_planning_msgs/msg/VelocityLimit
   - name: clear_velocity_limit
-    message_type: tier4_planning_msgs/msg/VelocityLimitClearCommand
-  - name: stop_reasons
-    message_type: tier4_planning_msgs/msg/StopReasonArray
-  - name: velocity_factors
-    message_type: tier4_planning_msgs/msg/VelocityFactorArray
+    message_type: autoware_internal_planning_msgs/msg/VelocityLimitClearCommand
 
 # parameters
 param_files:
